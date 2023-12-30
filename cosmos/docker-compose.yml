@@ -1,0 +1,20 @@
+version: '3.3'
+services:
+    cosmos-server:
+        ports:
+            - '80:80'
+            - '443:443'
+            - '4242:4242/udp'
+        container_name: cosmos-server
+        hostname: cosmos-server
+        restart: unless-stopped
+        privileged: true # Required for SELinux
+        volumes:
+            - '/var/run/docker.sock:/var/run/docker.sock'
+            - '/var/lib/cosmos:/config'
+            - '/:/mnt/host'
+        image: 'azukaar/cosmos-server:latest'
+        deploy:
+            resources:
+                limits:
+                    memory: 2G
